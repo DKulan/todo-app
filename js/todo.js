@@ -13,14 +13,21 @@ const todos = [{
 }]
 
 const filter = {
-    searchText: ''
+    searchText: '',
+    hideCompleted: false
 }
 
 
 const filterTodos = (todos, filter) => {
     document.querySelector('#todo-list').innerHTML = ''
 
-    const filteredResults = todos.filter(todo => todo.text.toLowerCase().includes(filter.searchText.toLowerCase()))
+    const filteredResults = todos.filter(todo => {
+        if (!filter.hideCompleted) {
+            return todo.text.toLowerCase().includes(filter.searchText.toLowerCase())
+        } else {
+            return todo.text.toLowerCase().includes(filter.searchText.toLowerCase()) && !todo.completed
+        }
+    })
 
     const incompleteItems = filteredResults.filter(todo => !todo.completed)
 
@@ -53,12 +60,13 @@ document.querySelector('#todo-form').addEventListener('submit', e => {
     filterTodos(todos, filter)
 })
 
+document.querySelector('#hide-completed').addEventListener('change', e => {
+    filter.hideCompleted = e.target.checked
+    filterTodos(todos, filter)
+})
+
 
 /*
     Challenge
-    1. Create a form with a single input for todo text
-    2. Setup a submit handler and cancel the default action
-    3. Add a new item to the todos array with that text data (completed value of false)
-    4. Rerender the application
-    5. Clear the input field value
+    1. Create checkbox input that hides completed todos
  */
