@@ -12,13 +12,6 @@ const todos = [{
     completed: true
 }]
 
-/*
-    Challenge Area
-    1. new div that contains todos
-    2. setup filters (searchText) and wire up a new filter input to change it
-    3. Create render todos function to render and rerender the latest filtered data
- */
-
 const filter = {
     searchText: ''
 }
@@ -45,12 +38,27 @@ const filterTodos = (todos, filter) => {
 filterTodos(todos, filter)
 
 // Listeners
-document.querySelector('#add-todo').addEventListener('click', e => {
-    console.log('An item was added...')
-})
-
 document.querySelector('#search-todo').addEventListener('input', e => {
     filter.searchText = e.target.value
     filterTodos(todos, filter)
 })
 
+document.querySelector('#todo-form').addEventListener('submit', e => {
+    e.preventDefault()
+    todos.push({
+        text: e.target.elements.addTodo.value,
+        completed: false
+    })
+    e.target.elements.addTodo.value = ''
+    filterTodos(todos, filter)
+})
+
+
+/*
+    Challenge
+    1. Create a form with a single input for todo text
+    2. Setup a submit handler and cancel the default action
+    3. Add a new item to the todos array with that text data (completed value of false)
+    4. Rerender the application
+    5. Clear the input field value
+ */
