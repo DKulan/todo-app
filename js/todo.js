@@ -14,28 +14,43 @@ const todos = [{
 
 /*
     Challenge Area
-    1. p tag that show how many tasks left to do
-    2. add a new paragraph for each todo item
+    1. new div that contains todos
+    2. setup filters (searchText) and wire up a new filter input to change it
+    3. Create render todos function to render and rerender the latest filtered data
  */
 
-const incompleteItems = todos.filter(todo => !todo.completed)
+const filter = {
+    searchText: ''
+}
 
-const headerTwo = document.createElement('h2')
-headerTwo.textContent = `You have ${incompleteItems.length} things left to do!`
-document.querySelector('body').appendChild(headerTwo)
 
-todos.forEach(todo => {
-    const paragraph = document.createElement('p')
-    paragraph.textContent = `${todo.text}`
-    document.querySelector('body').appendChild(paragraph)
-})
+const filterTodos = (todos, filter) => {
+    document.querySelector('#todo-list').innerHTML = ''
 
-// Listen for new todo item
+    const filteredResults = todos.filter(todo => todo.text.toLowerCase().includes(filter.searchText.toLowerCase()))
+
+    const incompleteItems = filteredResults.filter(todo => !todo.completed)
+
+    const headerTwo = document.createElement('h2')
+    headerTwo.textContent = `You have ${incompleteItems.length} things left to do!`
+    document.querySelector('#todo-list').appendChild(headerTwo)
+
+    filteredResults.forEach(todo => {
+        const paragraph = document.createElement('p')
+        paragraph.textContent = todo.text
+        document.querySelector('#todo-list').appendChild(paragraph)
+    })
+}
+
+filterTodos(todos, filter)
+
+// Listeners
 document.querySelector('#add-todo').addEventListener('click', e => {
     console.log('An item was added...')
 })
 
-document.querySelector('#new-todo-text').addEventListener('input', e => {
-    console.log(e.target.value)
+document.querySelector('#search-todo').addEventListener('input', e => {
+    filter.searchText = e.target.value
+    filterTodos(todos, filter)
 })
 
