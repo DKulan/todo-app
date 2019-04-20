@@ -29,7 +29,7 @@ const filterTodos = (todos, filter) => {
         }
     })
 
-    const incompleteItems = filteredResults.filter(todo => !todo.completed)
+    const incompleteItems = todos.filter(todo => !todo.completed)
 
     const headerTwo = document.createElement('h2')
     headerTwo.textContent = `You have ${incompleteItems.length} things left to do!`
