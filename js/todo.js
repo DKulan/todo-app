@@ -1,20 +1,21 @@
-const todos = [{
-    text: 'Practice JavaScript',
-    completed: false
-}, {
-    text: 'Finish Udacity Course',
-    completed: false
-}, {
-    text: 'Make Breakfast',
-    completed: true
-}, {
-    text: 'Make Coffee',
-    completed: true
-}]
+/*
+    Challenge
+    1. Delete dummy data
+    2. Read and parse the data when the app starts up
+    3. Stringify and write the data when new data is added
+ */
+
+let todos = []
 
 const filter = {
     searchText: '',
     hideCompleted: false
+}
+
+const todosJSON = localStorage.getItem('todos')
+
+if (todosJSON !== null) {
+    todos = JSON.parse(todosJSON)
 }
 
 
@@ -56,6 +57,8 @@ document.querySelector('#todo-form').addEventListener('submit', e => {
         text: e.target.elements.addTodo.value,
         completed: false
     })
+    const todosJSON = JSON.stringify(todos)
+    localStorage.setItem('todos', todosJSON)
     e.target.elements.addTodo.value = ''
     filterTodos(todos, filter)
 })
@@ -64,9 +67,3 @@ document.querySelector('#hide-completed').addEventListener('change', e => {
     filter.hideCompleted = e.target.checked
     filterTodos(todos, filter)
 })
-
-
-/*
-    Challenge
-    1. Create checkbox input that hides completed todos
- */
