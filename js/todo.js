@@ -1,46 +1,17 @@
 /*
     Challenge
-    1. Delete dummy data
-    2. Read and parse the data when the app starts up
-    3. Stringify and write the data when new data is added
+    1. Fetch existing todos from localStorage (getSavedTodos)
+    2. Save todos to localStorage (saveTodos)
+    3. Render application todos based on filters (renderToDos)
+    4. Get the DOM elements for an individual note (generateTodoDOM)
+    5. Get the DOM element for the list summary (generateSummaryDOM)
  */
 
-let todos = []
+const todos = getSavedTodos()
 
 const filter = {
     searchText: '',
     hideCompleted: false
-}
-
-const todosJSON = localStorage.getItem('todos')
-
-if (todosJSON !== null) {
-    todos = JSON.parse(todosJSON)
-}
-
-
-const filterTodos = (todos, filter) => {
-    document.querySelector('#todo-list').innerHTML = ''
-
-    const filteredResults = todos.filter(todo => {
-        if (!filter.hideCompleted) {
-            return todo.text.toLowerCase().includes(filter.searchText.toLowerCase())
-        } else {
-            return todo.text.toLowerCase().includes(filter.searchText.toLowerCase()) && !todo.completed
-        }
-    })
-
-    const incompleteItems = todos.filter(todo => !todo.completed)
-
-    const headerTwo = document.createElement('h2')
-    headerTwo.textContent = `You have ${incompleteItems.length} things left to do!`
-    document.querySelector('#todo-list').appendChild(headerTwo)
-
-    filteredResults.forEach(todo => {
-        const paragraph = document.createElement('p')
-        paragraph.textContent = todo.text
-        document.querySelector('#todo-list').appendChild(paragraph)
-    })
 }
 
 filterTodos(todos, filter)
@@ -57,8 +28,7 @@ document.querySelector('#todo-form').addEventListener('submit', e => {
         text: e.target.elements.addTodo.value,
         completed: false
     })
-    const todosJSON = JSON.stringify(todos)
-    localStorage.setItem('todos', todosJSON)
+    saveTodos(todos)
     e.target.elements.addTodo.value = ''
     filterTodos(todos, filter)
 })
