@@ -1,3 +1,10 @@
+/*
+    Challenge
+    1. Wire up button event
+    2. remove todo by id
+    3. Save and rerender the todos list
+ */
+
 const getSavedTodos = () => {
     const todosJSON = localStorage.getItem('todos')
 
@@ -10,6 +17,16 @@ const getSavedTodos = () => {
 
 const saveTodos = todos => {
     localStorage.setItem('todos', JSON.stringify(todos))
+}
+
+const removeTodo = id => {
+    const todoIndex = todos.findIndex(todo => {
+        return todo.id === id
+    })
+
+    if (todoIndex > -1) {
+        todos.splice(todoIndex, 1)
+    }
 }
 
 const renderTodos = (todos, filter) => {
@@ -32,28 +49,25 @@ const renderTodos = (todos, filter) => {
     })
 }
 
-/*
-    Challenge
-    1. Setup a root div
-    2. Setup and append a checkbox  (someNode.setAttribute('type', 'checkbox'))
-    3. Setup and append a span
-    4. Setup and append a button
- */
-
 const generateTodoDOM = todo => {
     const rootDiv = document.createElement('div')
     const checkBox = document.createElement('input')
-    const button = document.createElement('button')
+    const removeButton = document.createElement('button')
     const todoText = document.createElement('span')
 
     rootDiv.appendChild(checkBox)
     rootDiv.appendChild(todoText)
-    rootDiv.appendChild(button)
+    rootDiv.appendChild(removeButton)
+
+    removeButton.addEventListener('click', () => {
+        removeTodo(todo.id)
+        saveTodos(todos)
+        renderTodos(todos, filters)
+    })
 
     checkBox.setAttribute('type', 'checkbox')
-    button.textContent = 'x'
+    removeButton.textContent = 'x'
     todoText.textContent = todo.text
-
 
     return rootDiv
 }
