@@ -1,9 +1,10 @@
 /*
     Challenge
-    1. Wire up button event
-    2. remove todo by id
-    3. Save and rerender the todos list
+    1. Add event handler to checkbox
+    2. Modify the correct objects completed property
+    3. Save and rerender
  */
+
 
 const getSavedTodos = () => {
     const todosJSON = localStorage.getItem('todos')
@@ -27,6 +28,14 @@ const removeTodo = id => {
     if (todoIndex > -1) {
         todos.splice(todoIndex, 1)
     }
+}
+
+const toggleTodo = (id, e) => {
+    const todoIndex = todos.findIndex(todo => {
+        return todo.id === id
+    })
+
+    todos[todoIndex].completed = e.target.checked
 }
 
 const renderTodos = (todos, filter) => {
@@ -64,6 +73,14 @@ const generateTodoDOM = todo => {
         saveTodos(todos)
         renderTodos(todos, filters)
     })
+
+    checkBox.addEventListener('change', e => {
+        toggleTodo(todo.id, e)
+        saveTodos(todos)
+        renderTodos(todos, filters)
+    })
+
+    checkBox.checked = todo.completed
 
     checkBox.setAttribute('type', 'checkbox')
     removeButton.textContent = 'x'
