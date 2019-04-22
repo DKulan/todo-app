@@ -14,12 +14,12 @@ const filter = {
     hideCompleted: false
 }
 
-filterTodos(todos, filter)
+renderTodos(todos, filter)
 
 // Listeners
 document.querySelector('#search-todo').addEventListener('input', e => {
     filter.searchText = e.target.value
-    filterTodos(todos, filter)
+    renderTodos(todos, filter)
 })
 
 document.querySelector('#todo-form').addEventListener('submit', e => {
@@ -30,10 +30,10 @@ document.querySelector('#todo-form').addEventListener('submit', e => {
     })
     saveTodos(todos)
     e.target.elements.addTodo.value = ''
-    filterTodos(todos, filter)
+    renderTodos(todos, filter)
 })
 
 document.querySelector('#hide-completed').addEventListener('change', e => {
     filter.hideCompleted = e.target.checked
-    filterTodos(todos, filter)
+    renderTodos(todos, filter)
 })

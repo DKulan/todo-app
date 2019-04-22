@@ -12,7 +12,7 @@ const saveTodos = todos => {
     localStorage.setItem('todos', JSON.stringify(todos))
 }
 
-const filterTodos = (todos, filter) => {
+const renderTodos = (todos, filter) => {
     document.querySelector('#todo-list').innerHTML = ''
 
     const filteredResults = todos.filter(todo => {
@@ -32,10 +32,30 @@ const filterTodos = (todos, filter) => {
     })
 }
 
+/*
+    Challenge
+    1. Setup a root div
+    2. Setup and append a checkbox  (someNode.setAttribute('type', 'checkbox'))
+    3. Setup and append a span
+    4. Setup and append a button
+ */
+
 const generateTodoDOM = todo => {
-    const paragraph = document.createElement('p')
-    paragraph.textContent = todo.text
-    return paragraph
+    const rootDiv = document.createElement('div')
+    const checkBox = document.createElement('input')
+    const button = document.createElement('button')
+    const todoText = document.createElement('span')
+
+    rootDiv.appendChild(checkBox)
+    rootDiv.appendChild(todoText)
+    rootDiv.appendChild(button)
+
+    checkBox.setAttribute('type', 'checkbox')
+    button.textContent = 'x'
+    todoText.textContent = todo.text
+
+
+    return rootDiv
 }
 
 const generateSummaryDOM = () => {
