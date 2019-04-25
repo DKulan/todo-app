@@ -8,12 +8,7 @@
 
 const getSavedTodos = () => {
     const todosJSON = localStorage.getItem('todos')
-
-    if (todosJSON !== null) {
-        return JSON.parse(todosJSON)
-    } else {
-        return []
-    }
+    return todosJSON !== null ? JSON.parse(todosJSON) : []
 }
 
 const saveTodos = todos => {
@@ -21,9 +16,7 @@ const saveTodos = todos => {
 }
 
 const removeTodo = id => {
-    const todoIndex = todos.findIndex(todo => {
-        return todo.id === id
-    })
+    const todoIndex = todos.findIndex(todo =>  todo.id === id)
 
     if (todoIndex > -1) {
         todos.splice(todoIndex, 1)
@@ -42,11 +35,9 @@ const renderTodos = (todos, filter) => {
     document.querySelector('#todo-list').innerHTML = ''
 
     const filteredResults = todos.filter(todo => {
-        if (!filter.hideCompleted) {
-            return todo.text.toLowerCase().includes(filter.searchText.toLowerCase())
-        } else {
-            return todo.text.toLowerCase().includes(filter.searchText.toLowerCase()) && !todo.completed
-        }
+        return !filter.hideCompleted
+            ? todo.text.toLowerCase().includes(filter.searchText.toLowerCase())
+            : todo.text.toLowerCase().includes(filter.searchText.toLowerCase()) && !todo.completed
     })
 
     const headerEl = generateSummaryDOM()
