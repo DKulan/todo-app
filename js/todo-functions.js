@@ -1,10 +1,4 @@
-/*
-    Challenge
-    1. Add event handler to checkbox
-    2. Modify the correct objects completed property
-    3. Save and rerender
- */
-
+'use strict'
 
 const getSavedTodos = () => {
     const todosJSON = localStorage.getItem('todos')
