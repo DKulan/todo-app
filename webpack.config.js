@@ -19,7 +19,7 @@ module.exports = {
     },
     devServer: {
         contentBase: path.resolve(__dirname, 'lib'),
-        // publicPath: '/scripts'
+        publicPath: '/js'
     },
     devtool: 'source-map'
 }
